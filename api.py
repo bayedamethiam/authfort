@@ -62,7 +62,7 @@ class Historique(db.Model):
 def testeur():
     return "hohoho"
 
-"""
+
 @app.route('/verifyimage/<string:image_reference>', methods=['GET'])
 def verifyimage(image_reference):
     ut = Utilisateur.query.filter(Utilisateur.image_reference.like("%"+image_reference+"%"))
@@ -109,7 +109,7 @@ def users():
 
 
 #db.create_all()
-"""
+
 
 
 
