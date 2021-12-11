@@ -58,13 +58,11 @@ class Historique(db.Model):
 
 
 
-@app.route('/test', methods=['GET'])
+@app.route('/', methods=['GET'])
 def testeur():
     return "hohoho"
 
-
-
-
+"""
 @app.route('/verifyimage/<string:image_reference>', methods=['GET'])
 def verifyimage(image_reference):
     ut = Utilisateur.query.filter(Utilisateur.image_reference.like("%"+image_reference+"%"))
@@ -111,6 +109,10 @@ def users():
 
 
 #db.create_all()
+"""
+
+db.create_all()
+
 
 if __name__ == '__main__':
     app.run(debug=False)
