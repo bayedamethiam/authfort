@@ -131,7 +131,7 @@ def addhistorique(idUser,loginmode,action):
 #this path allow an user to try to authentificate with image
 @app.route('/verifyimage/<string:image_reference>', methods=['GET'])
 def verifyimage(image_reference):
-        ut = Utilisateur.query.filter_by(image_reference=image_reference).first()
+    ut = Utilisateur.query.filter_by(image_reference=image_reference).first()
 
     try:
         addhistorique(ut.id,"IMAGE","pointage")
