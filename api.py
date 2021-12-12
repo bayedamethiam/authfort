@@ -105,7 +105,7 @@ def historiques():
     historiques=Historique.query.all()
     data=[]
     for historique in historiques:
-        data.append({"id":historique.id,"loginmode":historique.loginmode.loginmode,"date":historique.date})
+        data.append({"id":historique.id,"loginmode":historique.loginmode,"date":historique.date})
    
 
     return jsonify(
@@ -119,12 +119,11 @@ def historiques():
 def addhistorique(idUser,loginmode,action):
     try:
             
-        
         historiqueToAdd= Historique(action=action,utilisateur=idUser,loginmode=loginmode) 
         db.session.add(historiqueToAdd)
         db.session.commit()
         return "yes"
-    except ValueError:
+    except :
         return "no"
 
 
@@ -147,7 +146,7 @@ def verifyrfid(rfid):
 
     try:
         addhistorique(ut.id,"RFID","pointage")
-    except ValueError:
+    except :
         return "no"
     
 
