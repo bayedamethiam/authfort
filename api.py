@@ -137,9 +137,9 @@ def verifyimage(image_reference):
 
 
 #this path allow an user to try to authentificate with rfid tag
-@app.route('/verifyrfid/<string:rfid_reference>', methods=['GET'])
-def verifyrfid(rfid_reference):
-    ut = Utilisateur.query.filter(Utilisateur.rfid_reference.like("%"+rfid_reference+"%"))
+@app.route('/verifyrfid/<string:rfid>', methods=['GET'])
+def verifyrfid(rfid):
+    ut = Utilisateur.query.filter(Utilisateur.rfid_reference.like(rfid))
 
     print(ut)
 
