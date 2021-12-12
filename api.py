@@ -131,12 +131,14 @@ def addhistorique(idUser,loginmode,action):
 #this path allow an user to try to authentificate with image
 @app.route('/verifyimage/<string:image_reference>', methods=['GET'])
 def verifyimage(image_reference):
-    ut = Utilisateur.query.filter(Utilisateur.image_reference.like("%"+image_reference+"%"))
+        ut = Utilisateur.query.filter_by(image_reference=image_reference).first()
 
-    if len(ut)==0:
+    try:
+        addhistorique(ut.id,"IMAGE","pointage")
+    except :
         return "no"
-    addhistorique(ut.id,"IMAGE","pointage")
-    return ut.id
+        
+    return "yes"
 
 
 #this path allow an user to try to authentificate with rfid tag
@@ -156,13 +158,17 @@ def verifyrfid(rfid):
 #this path allow an user to try to authentificate with qrcode
 @app.route('/verifyqr/<string:qr_reference>', methods=['GET'])
 def verifyqr(qr_reference):
-    ut = Utilisateur.query.filter(Utilisateur.qr_reference.like("%"+qr_reference+"%"))
+    ut = Utilisateur.query.filter_by(qr_reference=qr_reference).first()
 
-    if len(ut)==0:
+    try:
+        addhistorique(ut.id,"QR_CODE","pointage")
+    except :
         return "no"
-    addhistorique(ut.id,"DQRCODE","pointage")
-    return ut.id
-   
+    
+
+
+    return "yes"
+
 
 
 
