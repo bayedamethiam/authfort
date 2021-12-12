@@ -36,7 +36,7 @@ class Utilisateur(db.Model):
     __tablename__ = 'utilisateur'
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(60))
-    image_reference=db.Column(db.String(60))
+    image_reference=db.Column(db.LargeBinary(100))
     qr_reference = db.Column(db.String(60))
     rfid_reference=db.Column(db.String(60))
  
@@ -156,13 +156,16 @@ def verifyrfid(rfid):
 #this path allow an user to try to authentificate with qrcode
 @app.route('/verifyqr/<string:qr_reference>', methods=['GET'])
 def verifyqr(qr_reference):
-    ut = Utilisateur.query.filter(Utilisateur.qr_reference.like("%"+qr_reference+"%"))
+    ut = Utilisateur.query.filter_by(qr_reference=qr_reference).first()
 
-    if len(ut)==0:
+    try:
+        addhistorique(ut.id,"RFID","pointage")
+    except :
         return "no"
-    addhistorique(ut.id,"DQRCODE","pointage")
-    return ut.id
-   
+    
+
+
+    return "yes"
 
 
 
