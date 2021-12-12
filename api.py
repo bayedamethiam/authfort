@@ -105,7 +105,7 @@ def historiques():
     historiques=Historique.query.all()
     data=[]
     for historique in historiques:
-        data.append({"id":historique.id,"loginmode":historique.loginmode,"date":historique.date})
+        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":historique.date})
    
 
     return jsonify(
@@ -119,7 +119,7 @@ def historiques():
 def addhistorique(idUser,loginmode,action):
     try:
             
-        historiqueToAdd= Historique(action=action,utilisateur=idUser,loginmode=loginmode) 
+        historiqueToAdd= Historique(action=action,utilisateur=idUser,loginmode=loginmode,date=datetime.now()) 
         db.session.add(historiqueToAdd)
         db.session.commit()
         return "yes"
