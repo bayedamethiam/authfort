@@ -141,7 +141,7 @@ def verifyimage(image_reference):
 def verifyrfid(rfid):
     ut = Utilisateur.query.filter_by(rfid_reference=rfid).first()
 
-    print(ut)
+    print(ut.count())
 
 
     return "yes"
