@@ -29,7 +29,7 @@ migrate.init_app(app, db)
 
 
 
-
+ 
 
 class Utilisateur(db.Model):
 
