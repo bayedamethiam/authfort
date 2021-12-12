@@ -105,7 +105,7 @@ def historiques():
     historiques=Historique.query.all()
     data=[]
     for historique in historiques:
-        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":historique.date})
+        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":historique.date, "action":historique.action})
    
 
     return jsonify(
@@ -150,9 +150,6 @@ def verifyrfid(rfid):
         addhistorique(ut.id,"RFID","pointage")
     except :
         return "no"
-    
-
-
     return "yes"
 
 #this path allow an user to try to authentificate with qrcode
@@ -162,12 +159,10 @@ def verifyqr(qr_reference):
 
     try:
         addhistorique(ut.id,"QR_CODE","pointage")
+        return str(ut.name)
     except :
         return "no"
     
-
-
-    return "yes"
 
 
 
