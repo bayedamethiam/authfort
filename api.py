@@ -141,11 +141,10 @@ def verifyimage(image_reference):
 def verifyrfid(rfid_reference):
     ut = Utilisateur.query.filter(Utilisateur.rfid_reference.like("%"+rfid_reference+"%"))
 
-    if (ut.count())==0:
-        return "no"
+    print(ut)
 
-    addhistorique(ut[0].id,"RFID","pointage")
-    return ut.id
+
+    return "yes"
 
 #this path allow an user to try to authentificate with qrcode
 @app.route('/verifyqr/<string:qr_reference>', methods=['GET'])
