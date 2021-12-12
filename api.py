@@ -35,6 +35,7 @@ class Utilisateur(db.Model):
 
     __tablename__ = 'utilisateur'
     id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(60))
     image_reference=db.Column(db.String(60))
     qr_reference = db.Column(db.String(60))
     rfid_reference=db.Column(db.String(60))
@@ -49,6 +50,7 @@ class Historique(db.Model):
     action =db.Column(db.String(80))
     date=db.Column(db.DateTime)
     utilisateur=db.Column(db.Integer)
+    loginmode=db.Column(db.String(80))
 
     def __repr__(self):
         return '<utilisateur: {}>'.format(self.id)
@@ -60,50 +62,94 @@ class Historique(db.Model):
 
 @app.route('/', methods=['GET'])
 def testeur():
-    return "hohoho"
+    return "Hello this is your fav API "
 
 
-@app.route('/verifyimage/<string:image_reference>', methods=['GET'])
-def verifyimage(image_reference):
-    ut = Utilisateur.query.filter(Utilisateur.image_reference.like("%"+image_reference+"%"))
 
-    if len(ut)==0:
-        return 0
-    else:
-        return ut.id
-
-@app.route('/verifyrfid/<string:rfid_reference>', methods=['GET'])
-def verifyrfid(rfid_reference):
-    ut = Utilisateur.query.filter(Utilisateur.rfid_reference.like("%"+rfid_reference+"%"))
-
-    if len(ut)==0:
-        return 0
-    else:
-        return ut.id
-
-@app.route('/verifyqr/<string:qr_reference>', methods=['GET'])
-def verifyqr(qr_reference):
-    ut = Utilisateur.query.filter(Utilisateur.qr_reference.like("%"+qr_reference+"%"))
-
-    if len(ut)==0:
-        return 0
-    else:
-        return ut.id
-   
-
+#this path allow you to have all the users
 @app.route('/users', methods=['GET'])
 def users():
     req_info = Utilisateur.query.all()
     info = json.loads(req_info.decode('utf-8'))
     
-
-
     return jsonify(
     status=200,
     content=info
     )
 
 
+
+#this path allow you to add an user
+@app.route('/adduser', methods=['POST'])
+def adduser():
+
+    try:           
+        data = request.get_json()
+        userToAdd= Utilisateur(name=data.name,image_reference=data.image_reference,qr_reference=data.qr_reference,rfid_reference=data.rfid_reference) 
+        db.session.add(userToAdd)
+        db.session.commit()
+        return 1
+    except ValueError:
+        return 0
+
+#this path allow you to have all the histique's log
+@app.route('/historiques',methode=['GET'])
+def historiques():
+    historiques=Historique.query.all()
+    historiques = json.loads(historiques.decode('utf-8'))
+    return jsonify(
+    status=200,
+    content=historiques
+    )
+
+
+
+#this function allow you to add a historique's log
+def addhistorique(idUser,loginmode,action):
+    try:
+            
+        data = request.get_json()
+        historiqueToAdd= Historique(action=data.action,utilisateur=data.utilisateur,loginmode=data.loginmode) 
+        db.session.add(historiqueToAdd)
+        db.session.commit()
+        return 1
+    except ValueError:
+        return 0
+
+
+
+#this path allow an user to try to authentificate with image
+@app.route('/verifyimage/<string:image_reference>', methods=['GET'])
+def verifyimage(image_reference):
+    ut = Utilisateur.query.filter(Utilisateur.image_reference.like("%"+image_reference+"%"))
+
+    if len(ut)==0:
+        return 0
+    addhistorique(ut.id,"IMAGE","pointage")
+    return ut.id
+
+
+#this path allow an user to try to authentificate with rfid tag
+@app.route('/verifyrfid/<string:rfid_reference>', methods=['GET'])
+def verifyrfid(rfid_reference):
+    ut = Utilisateur.query.filter(Utilisateur.rfid_reference.like("%"+rfid_reference+"%"))
+
+    if len(ut)==0:
+        return 0
+
+    addhistorique(ut.id,"RFID","pointage")
+    return ut.id
+
+#this path allow an user to try to authentificate with qrcode
+@app.route('/verifyqr/<string:qr_reference>', methods=['GET'])
+def verifyqr(qr_reference):
+    ut = Utilisateur.query.filter(Utilisateur.qr_reference.like("%"+qr_reference+"%"))
+
+    if len(ut)==0:
+        return 0
+    addhistorique(ut.id,"DQRCODE","pointage")
+    return ut.id
+   
 
 
 
