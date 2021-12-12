@@ -70,11 +70,11 @@ def testeur():
 @app.route('/users', methods=['GET'])
 def users():
     req_info = Utilisateur.query.all()
-    info = json.loads(req_info.decode('utf-8'))
+    
     
     return jsonify(
     status=200,
-    content=info
+    content=req_info
     )
 
 
