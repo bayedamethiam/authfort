@@ -69,13 +69,11 @@ def testeur():
 #this path allow you to have all the users
 @app.route('/users', methods=['GET'])
 def users():
-    req_info = Utilisateur.query.all()
     
     
-    return jsonify(
-    status=200,
-    content=req_info
-    )
+    
+    return Utilisateur.query.all()
+    
 
 
 
