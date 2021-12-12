@@ -70,7 +70,7 @@ def testeur():
 @app.route('/users', methods=['GET'])
 def users():
     
-    
+    print(Utilisateur.query.all())
     
     return Utilisateur.query.all()
     
