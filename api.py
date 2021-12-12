@@ -36,7 +36,7 @@ class Utilisateur(db.Model):
     __tablename__ = 'utilisateur'
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(60))
-    image_reference=db.Column(db.LargeBinary(100))
+    image_reference=db.Column(db.String(100))
     qr_reference = db.Column(db.LargeBinary(100))
     rfid_reference=db.Column(db.String(60))
  
