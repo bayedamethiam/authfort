@@ -115,8 +115,8 @@ def historiques():
 def addhistorique(idUser,loginmode,action):
     try:
             
-        data = request.get_json()
-        historiqueToAdd= Historique(action=data.action,utilisateur=data.utilisateur,loginmode=data.loginmode) 
+        
+        historiqueToAdd= Historique(action=action,utilisateur=idUser,loginmode=loginmode) 
         db.session.add(historiqueToAdd)
         db.session.commit()
         return "yes"
