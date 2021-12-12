@@ -157,13 +157,10 @@ def verifyrfid(rfid):
 def verifyqr(qr_reference):
     ut = Utilisateur.query.filter_by(qr_reference=qr_reference).first()
 
-    try:
-        addhistorique(ut.id,"QR_CODE","pointage")
-        return str(ut.name)
-    except :
-        return "no"
-    
 
+    addhistorique(ut.id,"QR_CODE","pointage")
+
+    return str(ut.name)
 
 
 
