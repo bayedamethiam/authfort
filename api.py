@@ -89,9 +89,9 @@ def adduser():
         userToAdd= Utilisateur(name=data['name'],image_reference=data['image_reference'],qr_reference=data['qr_reference'],rfid_reference=data['rfid_reference']) 
         db.session.add(userToAdd)
         db.session.commit()
-        return 1
+        return "yes"
     except ValueError:
-        return 0
+        return "no"
 
 #this path allow you to have all the histique's log
 @app.route('/historiques',methods=['GET'])
@@ -113,9 +113,9 @@ def addhistorique(idUser,loginmode,action):
         historiqueToAdd= Historique(action=data.action,utilisateur=data.utilisateur,loginmode=data.loginmode) 
         db.session.add(historiqueToAdd)
         db.session.commit()
-        return 1
+        return "yes"
     except ValueError:
-        return 0
+        return "no"
 
 
 
@@ -125,7 +125,7 @@ def verifyimage(image_reference):
     ut = Utilisateur.query.filter(Utilisateur.image_reference.like("%"+image_reference+"%"))
 
     if len(ut)==0:
-        return 0
+        return "no"
     addhistorique(ut.id,"IMAGE","pointage")
     return ut.id
 
@@ -136,7 +136,7 @@ def verifyrfid(rfid_reference):
     ut = Utilisateur.query.filter(Utilisateur.rfid_reference.like("%"+rfid_reference+"%"))
 
     if len(ut)==0:
-        return 0
+        return "no"
 
     addhistorique(ut.id,"RFID","pointage")
     return ut.id
@@ -147,7 +147,7 @@ def verifyqr(qr_reference):
     ut = Utilisateur.query.filter(Utilisateur.qr_reference.like("%"+qr_reference+"%"))
 
     if len(ut)==0:
-        return 0
+        return "no"
     addhistorique(ut.id,"DQRCODE","pointage")
     return ut.id
    
