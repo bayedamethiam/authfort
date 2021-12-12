@@ -70,9 +70,17 @@ def testeur():
 @app.route('/users', methods=['GET'])
 def users():
     
-    print(Utilisateur.query.all())
-    
-    return Utilisateur.query.all()
+    users=Utilisateur.query.all()
+    data=[]
+
+    for user in users:
+        data.append({"id":user.id,"name":user.name,"image_reference":user.image_reference,"rfid_reference":user.rfid_reference,"qr_reference":user.qr_reference})
+    return jsonify(
+    status=200,
+    content=data
+    )
+
+
     
 
 
