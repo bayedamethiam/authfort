@@ -4,7 +4,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import json
 from json import JSONEncoder
 import urllib.request
-import dateutil.parser as parser
 
 from flask import  redirect, request, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -106,8 +105,7 @@ def historiques():
     historiques=Historique.query.all()
     data=[]
     for historique in historiques:
-        date= parser.parse(tostring(historique.date)).isoformat()
-        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":date})
+        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":historique.date})
    
 
     return jsonify(
