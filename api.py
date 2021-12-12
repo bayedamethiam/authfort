@@ -86,7 +86,7 @@ def adduser():
     try:           
         data = request.get_json()
         print(data)
-        userToAdd= Utilisateur(name=data.name,image_reference=data.image_reference,qr_reference=data.qr_reference,rfid_reference=data.rfid_reference) 
+        userToAdd= Utilisateur(name=data['name'],image_reference=data['image_reference'],qr_reference=data['qr_reference'],rfid_reference=data['rfid_reference']) 
         db.session.add(userToAdd)
         db.session.commit()
         return 1
