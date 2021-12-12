@@ -141,7 +141,11 @@ def verifyimage(image_reference):
 def verifyrfid(rfid):
     ut = Utilisateur.query.filter_by(rfid_reference=rfid).first()
 
-    print(ut.count())
+    try:
+        addhistorique(ut.id,"RFID","pointage")
+    except ValueError:
+        return "no"
+    
 
 
     return "yes"
