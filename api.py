@@ -105,7 +105,8 @@ def historiques():
     historiques=Historique.query.all()
     data=[]
     for historique in historiques:
-        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":historique.date})
+        date= parser.parse(histique.date).isoformat()
+        data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":date})
    
 
     return jsonify(
