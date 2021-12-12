@@ -106,7 +106,7 @@ def historiques():
     historiques=Historique.query.all()
     data=[]
     for historique in historiques:
-        date= parser.parse(historique.date).isoformat()
+        date= parser.parse(tostring(historique.date)).isoformat()
         data.append({"id":historique.id,"loginmode":historique.loginmode,"utilisateur":historique.utilisateur,"date":date})
    
 
