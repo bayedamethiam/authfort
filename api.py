@@ -103,10 +103,14 @@ def adduser():
 @app.route('/historiques',methods=['GET'])
 def historiques():
     historiques=Historique.query.all()
-    historiques = json.loads(historiques.decode('utf-8'))
+    data=[]
+    for historique in historiques:
+        data.append({"id":historique.id,"loginmode":historique.loginmode.loginmode,"date":historique.date})
+   
+
     return jsonify(
     status=200,
-    content=historiques
+    content=data
     )
 
 
