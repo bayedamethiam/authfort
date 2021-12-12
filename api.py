@@ -93,7 +93,7 @@ def adduser():
         return 0
 
 #this path allow you to have all the histique's log
-@app.route('/historiques',methode=['GET'])
+@app.route('/historiques',methods=['GET'])
 def historiques():
     historiques=Historique.query.all()
     historiques = json.loads(historiques.decode('utf-8'))
