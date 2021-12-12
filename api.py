@@ -144,7 +144,7 @@ def verifyrfid(rfid_reference):
     if (ut.count())==0:
         return "no"
 
-    addhistorique(ut.id,"RFID","pointage")
+    addhistorique(ut[0].id,"RFID","pointage")
     return ut.id
 
 #this path allow an user to try to authentificate with qrcode
